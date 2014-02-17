@@ -117,8 +117,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
     };
   }])
 
-  .factory('$modalStack', ['$transition', '$timeout', '$document', '$compile', '$rootScope', '$$stackedMap', '$userAgent', '$window',
-    function ($transition, $timeout, $document, $compile, $rootScope, $$stackedMap, $userAgent, $window) {
+  .factory('$modalStack', ['$transition', '$timeout', '$document', '$compile', '$rootScope', '$$stackedMap', '$userAgent',
+    function ($transition, $timeout, $document, $compile, $rootScope, $$stackedMap, $userAgent) {
 
       var OPENED_MODAL_CLASS = 'modal-open';
 
