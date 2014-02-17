@@ -251,9 +251,10 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         if ($userAgent.isIOS()) {
           setTimeout(function () {
             angularDomEl.addClass('modal-ios');
-            $('.modal').height($document.height());
             $('.modal-backdrop').height($document.height());
-            $window.scrollTo(0, 0);
+            $('.modal')
+              .height($document.height())
+              .css({'margin-top': $document.scrollTop() + 'px'});
           }, 0);
         }
       };
