@@ -251,8 +251,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         if ($userAgent.isIOS()) {
           setTimeout(function () {
             angularDomEl.addClass('modal-ios');
-            $('.modal-backdrop').height($document.height());
-            $('.modal')
+            angular.element($document[0].getElementsByClassName('modal-backdrop'))
+              .height($document.height());
+            angular.element($document[0].getElementsByClassName('modal'))
               .height($document.height())
               .css({'margin-top': $document.scrollTop() + 'px'});
           }, 0);
