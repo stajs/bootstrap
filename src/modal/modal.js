@@ -1,6 +1,17 @@
 angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 
 /**
+ * A helper to determine if the user agent is iOS (see issue #1812). This can be removed at the point when iOS fixes the bug.
+ */
+  .factory('$userAgent', ['$window', function ($window) {
+    return {
+      isIOS: function () {
+        return /iPhone|iPad|iPod/i.test($window.navigator.userAgent);
+      }
+    }
+  }])
+
+/**
  * A helper, internal data structure that acts as a map but also allows getting / removing
  * elements in the LIFO order
  */
@@ -106,8 +117,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
     };
   }])
 
-  .factory('$modalStack', ['$transition', '$timeout', '$document', '$compile', '$rootScope', '$$stackedMap',
-    function ($transition, $timeout, $document, $compile, $rootScope, $$stackedMap) {
+  .factory('$modalStack', ['$transition', '$timeout', '$document', '$compile', '$rootScope', '$$stackedMap', '$userAgent', '$window',
+    function ($transition, $timeout, $document, $compile, $rootScope, $$stackedMap, $userAgent, $window) {
 
       var OPENED_MODAL_CLASS = 'modal-open';
 
@@ -235,6 +246,16 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         openedWindows.top().value.modalDomEl = modalDomEl;
         body.append(modalDomEl);
         body.addClass(OPENED_MODAL_CLASS);
+
+        // Workaround for issue #1812. This can be removed at the point when iOS fixes the bug.
+        if ($userAgent.isIOS()) {
+          setTimeout(function () {
+            angularDomEl.addClass('modal-ios');
+            $('.modal').height($document.height());
+            $('.modal-backdrop').height($document.height());
+            $window.scrollTo(0, 0);
+          }, 0);
+        }
       };
 
       $modalStack.close = function (modalInstance, result) {
