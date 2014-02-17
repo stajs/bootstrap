@@ -8,7 +8,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
       isIOS: function () {
         return /iPhone|iPad|iPod/i.test($window.navigator.userAgent);
       }
-    }
+    };
   }])
 
 /**
